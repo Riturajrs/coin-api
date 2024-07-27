@@ -22,7 +22,7 @@ Current API Version: 1.0
 
 
 ```
-/api/
+localhost:8000/api
 ```
 
 

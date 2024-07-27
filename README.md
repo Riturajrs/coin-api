@@ -438,14 +438,21 @@ The API uses standard HTTP status codes to indicate the success or failure of an
 }
 ```
 
-### Docker container:
+### Running the application:
+
+#### Running locally:
+
+As this is a Django project, first install all dependencies using this command: `pip install -r requirements.txt`
+Once all dependencies are installed, you can run this application on your local machine using the command: `python manage.py runserver`
+
+#### Docker container:
 
 The application also contains a dockerfile, which runs on a Python 3.12 image, and is able to setup all the necessary libraries using the `requirements.txt` file.
 
-#### Build image: 
+##### Build image: 
 You can build the Docker image using command: `docker build -t <container_name> .`
 
-#### Running the container:
+##### Running the container:
 Once the image is built, you can run the Docker container based of the image using command: `docker run -p 8000:8000 <container_name>`
 Here we are porting `8080` for to and fro communication between the Docker image, and same has been exposed using the Dockerfile. If you wish to run it in a different port you need to make changes in this command and in the Dockerfile
 

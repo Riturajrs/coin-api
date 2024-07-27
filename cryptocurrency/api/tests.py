@@ -201,6 +201,39 @@ class MarketDataForCoinTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
         self.assertIn("An error occurred: Test error", response.data)
 
+class GetHealthCheckTest(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser", password="testpassword"
+        )
+        self.token, _ = Token.objects.get_or_create(user=self.user)
+
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)
+        self.url = reverse("get-health-check")
+
+    @patch("requests.get")
+    def test_get_health_check_success(self, mock_get):
+        mock_response = {"gecko_says": "(V3) To the Moon!"}
+        mock_get.return_value.status_code = 200
+        mock_get.return_value.json.return_value = mock_response
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["version"], 1.0)
+        self.assertEqual(response.data["status"], "online")
+        self.assertEqual(response.data["3rd party api response"], str(mock_response))
+
+    @patch("requests.get")
+    def test_get_health_check_error(self, mock_get):
+        mock_get.side_effect = requests.exceptions.RequestException("Test error")
+
+        response = self.client.get(self.url)
+
+        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertIn("An error occurred: Test error", response.data)
+
 if __name__ == "__main__":
     import unittest
 

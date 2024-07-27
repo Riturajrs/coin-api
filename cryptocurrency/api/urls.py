@@ -9,4 +9,5 @@ urlpatterns = [
     path("coins", views.listAllCoins, name="list-all-coins"),
     path("categories", views.listAllCoinCategories, name="list-all-categories"),
     path("market-data", views.marketDataForCoin, name="market-data-for-coin"),
+    path("health",views.getHealthCheck),
 ]

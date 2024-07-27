@@ -14,13 +14,24 @@ from django.contrib.auth import authenticate
 from .serializers import UserSerializer
 
 
+@api_view(["GET"])
+def getHealthCheck(request):
+    try:
+        gecko_response = requests.get("https://api.coingecko.com/api/v3/ping")
+        gecko_response_json = gecko_response.json()
+        return Response({"version": 1.0, "status": "online",
+                        "3rd party api response": str(gecko_response_json)},
+                        status=status.HTTP_200_OK)
+    except requests.exceptions.RequestException as error:
+        return Response({f"An error occurred: {error}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 @api_view(["POST"])
 def createUser(request):
     serializer = UserSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        user = User.objects.get(username=request.data["username"])
-        user.set_password(request.data["password"])
+        user = User.objects.get(username=request.data['username'])
+        user.set_password(request.data['password'])
         user.save()
         token = Token.objects.create(user=user)
         return Response(
@@ -33,7 +44,7 @@ def createUser(request):
 @api_view(["POST"])
 def loginUser(request):
     user = authenticate(
-        username=request.data["username"], password=request.data["password"]
+        username=request.data['username'], password=request.data['password']
     )
     if user is not None:
         token, _ = Token.objects.get_or_create(user=user)
@@ -109,12 +120,12 @@ def listAllCoinCategories(request):
 @permission_classes([IsAuthenticated])
 def marketDataForCoin(request):
     url = None
-    if "id" in request.data and request.data["id"] is not None and "category" in request.data and request.data["category"] is not None:
-        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids={request.data["id"]}&category={request.data["category"]}"
-    elif "id" in request.data and request.data["id"] is not None:
-        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids={request.data["id"]}"
-    elif "category" in request.data and request.data["category"] is not None:
-        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&category={request.data["category"]}"
+    if "id" in request.data and request.data['id'] is not None and "category" in request.data and request.data['category'] is not None:
+        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids={request.data['id']}&category={request.data['category']}"
+    elif "id" in request.data and request.data['id'] is not None:
+        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids={request.data['id']}"
+    elif "category" in request.data and request.data['category'] is not None:
+        url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&category={request.data['category']}"
     page_number = int(request.query_params.get('page_num', 1))
     page_size = int(request.query_params.get('per_page', 10))
 

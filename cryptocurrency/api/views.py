@@ -36,7 +36,7 @@ def loginUser(request):
         username=request.data["username"], password=request.data["password"]
     )
     if user is not None:
-        token, created = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
         serializer = UserSerializer(instance=user)
         return Response(
             {"token": token.key, "user": serializer.data}, status=status.HTTP_200_OK

@@ -12,7 +12,7 @@ class ListAllCoinsTest(APITestCase):
         self.user = User.objects.create_user(
             username="testuser", password="testpassword"
         )
-        self.token, created = Token.objects.get_or_create(user=self.user)
+        self.token, _ = Token.objects.get_or_create(user=self.user)
 
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION="Token " + self.token.key)

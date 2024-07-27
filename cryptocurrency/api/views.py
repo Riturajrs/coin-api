@@ -58,11 +58,6 @@ def logout(request):
 @api_view(["GET"])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def testAuth(request):
-    return Response(f"Authenticated user: {request.user.email} !")
-
-
-@api_view(["GET"])
 def listAllCoins(request):
     url = "https://api.coingecko.com/api/v3/coins/list"
 
@@ -86,6 +81,8 @@ def listAllCoins(request):
 
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def listAllCoinCategories(request):
     url = "https://api.coingecko.com/api/v3/coins/categories/list"
     page_number = int(request.query_params.get('page_num', 1))
@@ -108,6 +105,8 @@ def listAllCoinCategories(request):
 
 
 @api_view(["GET"])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def marketDataForCoin(request):
     url = None
     if "id" in request.data and request.data["id"] is not None and "category" in request.data and request.data["category"] is not None:

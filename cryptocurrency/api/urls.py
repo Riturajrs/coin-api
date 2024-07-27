@@ -5,7 +5,6 @@ from django.conf import settings
 urlpatterns = [
     path("new-user", views.createUser),
     path("login", views.loginUser),
-    path("test-auth", views.testAuth),
     path("logout", views.logout),
     path("coins", views.listAllCoins),
     path("categories", views.listAllCoinCategories),

@@ -454,7 +454,7 @@ You can build the Docker image using command: `docker build -t <container_name> 
 
 ##### Running the container:
 Once the image is built, you can run the Docker container based of the image using command: `docker run -p 8000:8000 <container_name>`
-Here we are porting `8080` for to and fro communication between the Docker image, and same has been exposed using the Dockerfile. If you wish to run it in a different port you need to make changes in this command and in the Dockerfile
+Here we are porting `8000` for to and fro communication between the Docker image, and same has been exposed using the Dockerfile. If you wish to run it in a different port you need to make changes in this command and in the Dockerfile
 
 ### Unit Tests
 The application is thoroughly covered by unit tests to ensure the reliability and correctness of the API functionality. Currently test coverage is ~90%

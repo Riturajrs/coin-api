@@ -6,7 +6,7 @@ urlpatterns = [
     path("new-user", views.createUser),
     path("login", views.loginUser),
     path("logout", views.logout),
-    path("coins", views.listAllCoins, name="list_all_coins"),
-    path("categories", views.listAllCoinCategories),
-    path("market-data", views.marketDataForCoin),
+    path("coins", views.listAllCoins, name="list-all-coins"),
+    path("categories", views.listAllCoinCategories, name="list-all-categories"),
+    path("market-data", views.marketDataForCoin, name="market-data-for-coin"),
 ]

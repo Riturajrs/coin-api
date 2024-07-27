@@ -65,11 +65,20 @@ def testAuth(request):
 @api_view(["GET"])
 def listAllCoins(request):
     url = "https://api.coingecko.com/api/v3/coins/list"
+
+    page_number = int(request.query_params.get('page_num', 1))
+    page_size = int(request.query_params.get('per_page', 10))
+    
     try:
         response = requests.get(url)
-
         response.raise_for_status()
-        return Response(response.json(), status=status.HTTP_200_OK)
+        
+        coins = response.json()
+        start_index = (page_number - 1) * page_size
+        end_index = start_index + page_size
+        paginated_coins = coins[start_index:end_index]
+
+        return Response(paginated_coins, status=status.HTTP_200_OK)
     except requests.exceptions.RequestException as error:
         return Response(
             {f"An error occurred: {error}"}, status=status.HTTP_400_BAD_REQUEST
@@ -79,12 +88,19 @@ def listAllCoins(request):
 @api_view(["GET"])
 def listAllCoinCategories(request):
     url = "https://api.coingecko.com/api/v3/coins/categories/list"
-
+    page_number = int(request.query_params.get('page_num', 1))
+    page_size = int(request.query_params.get('per_page', 10))
+    
     try:
         response = requests.get(url)
-
         response.raise_for_status()
-        return Response(response.json(), status=status.HTTP_200_OK)
+        
+        categories = response.json()
+        start_index = (page_number - 1) * page_size
+        end_index = start_index + page_size
+        paginated_categories = categories[start_index:end_index]
+        
+        return Response(paginated_categories, status=status.HTTP_200_OK)
     except requests.exceptions.RequestException as error:
         return Response(
             {f"An error occurred: {error}"}, status=status.HTTP_400_BAD_REQUEST
@@ -100,12 +116,19 @@ def marketDataForCoin(request):
         url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&ids={request.data["id"]}"
     elif "category" in request.data and request.data["category"] is not None:
         url = f"https://api.coingecko.com/api/v3/coins/markets?vs_currency=cad&category={request.data["category"]}"
-    
+    page_number = int(request.query_params.get('page_num', 1))
+    page_size = int(request.query_params.get('per_page', 10))
+
     try:
         response = requests.get(url)
-
         response.raise_for_status()
-        return Response(response.json(), status=status.HTTP_200_OK)
+        
+        market_data = response.json()
+        start_index = (page_number - 1) * page_size
+        end_index = start_index + page_size
+        paginated_market_data = market_data[start_index:end_index]
+        
+        return Response(paginated_market_data, status=status.HTTP_200_OK)
     except requests.exceptions.RequestException as error:
         return Response(
             {f"An error occurred: {error}"}, status=status.HTTP_400_BAD_REQUEST

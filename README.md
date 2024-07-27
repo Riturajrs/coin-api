@@ -1,39 +1,39 @@
 
 ## Documentation for the Coin Market REST API
 
-  
+
 
 ### Introduction
 
-  
+
 
 Welcome to the Coin Market REST API documentation. This API provides endpoints to manage and retrieve data related to various cryptocurrencies and their market data. This documentation outlines the available endpoints, their usage, and specifications.
 
-  
+
 
 ### Version
-  
+
 
 Current API Version: 1.0
 
 
 ### Base URL
 
-  
+
 
 ```
 /api/
 ```
 
-  
+
 
 ### Authentication
 
-  
+
 
 This API is protected using your favorite authentication mechanism. Ensure you include the necessary authentication headers in your requests.
 
-  
+
 
 ### Endpoints
 
@@ -136,11 +136,11 @@ Authorization: token <AUTH_TOKEN>
 "User newuser@gmail.com has been logged out!"
 ```
 
-  
+
 
 #### 4. List All Coins
 
-  
+
 
 **Endpoint:**  `/api/coins`
 
@@ -211,7 +211,7 @@ Authorization: token <AUTH_TOKEN>
 ]
 ```
 
-  
+
 
 #### 5. List Coin Categories
 
@@ -223,13 +223,13 @@ Authorization: token <AUTH_TOKEN>
 
 **Query Parameters:**
 -  `page_num` (optional, default: 1): The page number to retrieve.
--  `per_page` (optional, default: 10): The number of items per page.  
+-  `per_page` (optional, default: 10): The number of items per page.
 
 **Description:** Retrieves a list of all available coin categories. This is a protected endpoint, you need to set authorization header as  ```token <AUTH_TOKEN> ```, after login or signup has been done
 
 **Request:**
 
-*URL*: ```localhost:8000/api/categories?page_num=10&per_page=5``` 
+*URL*: ```localhost:8000/api/categories?page_num=10&per_page=5```
 
 *Headers*:
 ```json
@@ -263,7 +263,7 @@ Authorization: token <AUTH_TOKEN>
 ]
 ```
 
-  
+
 
 #### 6. Market Data for a Specific Coin
 
@@ -274,7 +274,7 @@ Authorization: token <AUTH_TOKEN>
 
 **Query Parameters:**
 -  `page_num` (optional, default: 1): The page number to retrieve.
--  `per_page` (optional, default: 10): The number of items per page.  
+-  `per_page` (optional, default: 10): The number of items per page.
 
 **Description:** Retrieves market data for a specific coin, including data against the Canadian Dollar (CAD).  This is a protected endpoint, you need to set authorization header as  ```token <AUTH_TOKEN> ```, after login or signup has been done
 
@@ -286,7 +286,7 @@ Either the `id` or the `category` parameter must have a valid value, both can al
 
 **Request:**
 
-*URL*: `localhost:8000/api/market-data?page_num=1&per_page=3`  
+*URL*: `localhost:8000/api/market-data?page_num=1&per_page=3`
 
 *Body*:
 ```json
@@ -422,13 +422,13 @@ Authorization: token <AUTH_TOKEN>
 
 All list endpoints support pagination. Use the `page_num` and `per_page` query parameters to control the pagination of the response. By default, `page_num` is set to 1, and `per_page` is set to 10.
 
-  
+
 
 ### Error Handling
 
 The API uses standard HTTP status codes to indicate the success or failure of an API request. Responses with a status code in the 2xx range indicate success, while codes in the 4xx and 5xx ranges indicate errors. Error responses include a JSON object with an `error` field containing a message describing the error.
 
-  
+
 
 **Example Error Response:**
 

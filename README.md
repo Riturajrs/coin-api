@@ -12,21 +12,17 @@ Welcome to the Coin Market REST API documentation. This API provides endpoints t
   
 
 ### Version
-
   
 
 Current API Version: 1.0
 
-  
 
 ### Base URL
 
   
 
 ```
-
 /api/
-
 ```
 
   
@@ -54,7 +50,9 @@ This API is protected using your favorite authentication mechanism. Ensure you i
 
 
 **Request:**
+
 *URL*: ``localhost:8000/api/new-user``
+
 *Body*:
 ```json
 {
@@ -65,6 +63,7 @@ This API is protected using your favorite authentication mechanism. Ensure you i
 ```
 
 **Response:**
+
 ```json
 {
     "token": "82a6cbba2cef45ebc7e3d7d41af29d595091282d",
@@ -86,7 +85,9 @@ This API is protected using your favorite authentication mechanism. Ensure you i
 **Description:** Logs in a user, when requested with correct credentials. Returns a ```<AUTH_TOKEN>``` on successful login of a user
 
 **Request:**
+
 *URL*: ``localhost:8000/api/login``
+
 *Body*:
 ```json
 {
@@ -97,6 +98,7 @@ This API is protected using your favorite authentication mechanism. Ensure you i
 ```
 
 **Response:**
+
 ```json
 {
     "token": "4b8ad9cd1b42ae7c6eead1e0c97567f031a47a9a",
@@ -121,7 +123,9 @@ This API is protected using your favorite authentication mechanism. Ensure you i
 **Description:** Logs out a user, and the previously issued ```<AUTH_TOKEN>``` gets invalidated
 
 **Request:**
+
 *URL*: ``localhost:8000/api/logout``
+
 *Headers*:
 ```json
 Authorization: token <AUTH_TOKEN>
@@ -152,13 +156,16 @@ Authorization: token <AUTH_TOKEN>
 -  `per_page` (optional, default: 10): The number of items per page.
 
 **Request:**
+
 *URL*: ``localhost:8000/api/coins?page_num=10&per_page=8``
+
 *Headers*:
 ```json
 Authorization: token <AUTH_TOKEN>
 ```
 
 **Response:**
+
 ```json
 [
     {
@@ -221,13 +228,16 @@ Authorization: token <AUTH_TOKEN>
 **Description:** Retrieves a list of all available coin categories. This is a protected endpoint, you need to set authorization header as  ```token <AUTH_TOKEN> ```, after login or signup has been done
 
 **Request:**
+
 *URL*: ```localhost:8000/api/categories?page_num=10&per_page=5``` 
+
 *Headers*:
 ```json
 Authorization: token <AUTH_TOKEN>
 ```
 
 **Response:**
+
 ```json
 [
     {
@@ -275,7 +285,9 @@ Either the `id` or the `category` parameter must have a valid value, both can al
 -  `category` (optional): The ID of the coin category.
 
 **Request:**
+
 *URL*: `localhost:8000/api/market-data?page_num=1&per_page=3`  
+
 *Body*:
 ```json
 {
@@ -283,12 +295,14 @@ Either the `id` or the `category` parameter must have a valid value, both can al
 	"category":  "account-abstraction"
 }
 ```
+
 *Headers*:
 ```json
 Authorization: token <AUTH_TOKEN>
 ```
 
 **Response:**
+
 ```json
 
 [
@@ -378,6 +392,31 @@ Authorization: token <AUTH_TOKEN>
     }
 ]
 ```
+
+
+#### 7. Health
+
+**Endpoint:**  `/api/health`
+
+**Method:**  `GET`
+
+
+**Description:** Gives information about versioning and health of the api along with the health of it's 3rd party applications
+
+**Request:**
+
+*URL*: ``localhost:8000/api/health``
+
+**Response:**
+
+```json
+{
+    "version": 1.0,
+    "status": "online",
+    "3rd party api response": "{'gecko_says': '(V3) To the Moon!'}"
+}
+```
+
 
 ### Pagination
 
